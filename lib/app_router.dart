@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'services/auth/secure_storage_service.dart';
 import 'views/auth/login_view.dart';
+import 'views/auth/register_view.dart';
 import 'views/dashboard/dashboard_view.dart';
 import 'views/splash_view.dart';
 import 'models/user.dart';
@@ -52,19 +53,19 @@ class AppRouter {
           successMessage: state.extra is String ? state.extra as String : null,
         ),
       ),
+      GoRoute(
+        path: '/register',
+        name: 'register',
+        builder: (context, state) => const RegisterView(),
+      ),
       // GoRoute(
-      //   path: '/register',
-      //   name: 'register',
-      //   builder: (context, state) => const RegisterView(),
+      //   path: '/dashboard',
+      //   name: 'dashboard',
+      //   builder: (context, state) {
+      //     final user = state.extra as User?;
+      //     return DashboardView(user: user!);
+      //   },
       // ),
-      // // GoRoute(
-      // //   path: '/dashboard',
-      // //   name: 'dashboard',
-      // //   builder: (context, state) {
-      // //     final user = state.extra as User?;
-      // //     return DashboardView(user: user!);
-      // //   },
-      // // ),
       GoRoute(
         path: '/dashboard',
         name: 'dashboard',

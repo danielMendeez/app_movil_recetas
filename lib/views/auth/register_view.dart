@@ -1,57 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../../viewmodels/auth/login_viewmodel.dart';
+import '../../viewmodels/auth/register_viewmodel.dart';
 import '../../models/user.dart';
 import '../../views/dashboard/dashboard_view.dart';
 import '../components/layout/form_header.dart';
 import '../components/layout/form_footer.dart';
-import '../components/forms/login_form.dart';
+import '../components/forms/register_form.dart';
 import '../components/buttons/primary_button.dart';
 import '../components/feedback/error_message.dart';
 
-class LoginView extends StatefulWidget {
-  final String? successMessage;
-
-  const LoginView({Key? key, this.successMessage}) : super(key: key);
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
+  final _nombreController = TextEditingController();
+  final _apellidoController = TextEditingController();
   final _correoController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   void dispose() {
+    _nombreController.dispose();
+    _apellidoController.dispose();
     _correoController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.successMessage != null && widget.successMessage!.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(widget.successMessage!),
-              backgroundColor: Colors.orange[600],
-            ),
-          );
-        }
-      });
-    }
-  }
-
-  void _onRegister() {
-    // Navegar a la vista de registro
-    // print('Navegar a registro');
-    context.go('/register');
+  void _onLogin() {
+    // Navegar a la vista de login
+    context.go('/login');
   }
 
   void _onPrivacyPolicy() {
@@ -61,7 +44,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<LoginViewModel>(context);
+    final viewModel = Provider.of<RegisterViewModel>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -73,14 +56,13 @@ class _LoginViewState extends State<LoginView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 40),
-                _buildHeader(),
-                const SizedBox(height: 40),
-                _buildLoginForm(viewModel),
-                const SizedBox(height: 32),
-                _buildLoginButton(viewModel),
-                _buildViewModelError(viewModel),
                 const SizedBox(height: 20),
+                _buildHeader(),
+                const SizedBox(height: 32),
+                _buildRegisterForm(viewModel),
+                const SizedBox(height: 24),
+                _buildRegisterButton(viewModel),
+                _buildViewModelError(viewModel),
                 _buildFooter(),
               ],
             ),
@@ -92,31 +74,39 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildHeader() {
     return const FormHeader(
-      title: 'Bienvenido a RecetasApp',
-      subtitle: 'Inicia sesión en tu cuenta',
+      title: 'Crear Cuenta',
+      subtitle: 'Regístrate para comenzar',
       imagePath: 'assets/images/icon_image.png',
       imageSize: 150,
     );
   }
 
-  Widget _buildLoginForm(LoginViewModel viewModel) {
-    return LoginForm(
+  Widget _buildRegisterForm(RegisterViewModel viewModel) {
+    return RegisterForm(
+      nombreController: _nombreController,
+      apellidoController: _apellidoController,
       correoController: _correoController,
       passwordController: _passwordController,
     );
   }
 
-  Widget _buildLoginButton(LoginViewModel viewModel) {
+  Widget _buildRegisterButton(RegisterViewModel viewModel) {
     return PrimaryButton(
-      text: 'Iniciar Sesión',
+      text: 'Registrarse',
       onPressed: () async {
-        final user = await viewModel.login(
-          _correoController.text,
-          _passwordController.text,
+        final user = await viewModel.register(
+          nombre: _nombreController.text,
+          apellido: _apellidoController.text,
+          correo: _correoController.text,
+          password: _passwordController.text,
         );
 
         if (user != null && context.mounted) {
-          context.go('/dashboard', extra: user);
+          // Redirigir al login pasando un mensaje de éxito
+          context.go(
+            '/login',
+            extra: 'Tu cuenta se creó correctamente. Por favor inicia sesión.',
+          );
         }
       },
       isLoading: viewModel.isLoading,
@@ -124,7 +114,7 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget _buildViewModelError(LoginViewModel viewModel) {
+  Widget _buildViewModelError(RegisterViewModel viewModel) {
     return viewModel.errorMessage != null
         ? ErrorMessage(message: viewModel.errorMessage!)
         : const SizedBox.shrink();
@@ -132,12 +122,11 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildFooter() {
     return FormFooter(
-      helpText: '¿No tienes una cuenta?',
-      primaryLink: FooterLink(text: 'Regístrate aquí', onTap: _onRegister),
+      helpText: '¿Ya tienes una cuenta?',
+      primaryLink: FooterLink(text: 'Inicia sesión aquí', onTap: _onLogin),
       copyrightText: '© 2024 Mi Empresa. Todos los derechos reservados.',
       versionText: 'v1.0.0',
       links: [
-        // FooterLinks for additional actions
         FooterLink(text: 'Política de privacidad', onTap: _onPrivacyPolicy),
       ],
       showDivider: true,

@@ -22,7 +22,7 @@ class PrimaryButton extends StatelessWidget {
       return Container(
         height: 54,
         decoration: BoxDecoration(
-          color: backgroundColor ?? Colors.green[300],
+          color: backgroundColor ?? Colors.orange[300],
           borderRadius: BorderRadius.circular(12),
         ),
         child: const Center(
@@ -36,7 +36,7 @@ class PrimaryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor ?? Colors.green[600],
+        backgroundColor: backgroundColor ?? Colors.orange[600],
         foregroundColor: textColor,
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
