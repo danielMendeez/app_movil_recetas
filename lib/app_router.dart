@@ -72,8 +72,20 @@ class AppRouter {
         builder: (context, state) {
           final user = state.extra as User?;
           if (user == null) {
-            return const Scaffold(
-              body: Center(child: Text('Error: usuario no encontrado')),
+            return Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Error: Usuario no proporcionado'),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () => context.go('/login'),
+                      child: const Text('Volver al inicio de sesión'),
+                    ),
+                  ],
+                ),
+              ),
             );
           }
           return DashboardView(user: user);

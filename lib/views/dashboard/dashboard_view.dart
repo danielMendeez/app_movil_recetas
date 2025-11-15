@@ -4,7 +4,7 @@ import '../../viewmodels/dashboard_viewmodel.dart';
 import 'components/sidebar.dart';
 import 'components/home_content.dart';
 import 'components/profile_content.dart';
-import 'components/settings_content.dart';
+import 'components/favorites_content.dart';
 import '../../models/user.dart';
 
 class DashboardView extends StatefulWidget {
@@ -62,10 +62,7 @@ class _DashboardViewState extends State<DashboardView> {
           user: widget.user,
         );
       case 2:
-        return SettingsContent(
-          key: const ValueKey('settings'),
-          user: widget.user,
-        );
+        return const FavoritesContent(key: ValueKey('favorites'));
       default:
         return HomeContent(
           key: const ValueKey('home-default'),

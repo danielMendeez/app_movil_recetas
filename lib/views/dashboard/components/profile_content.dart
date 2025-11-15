@@ -10,7 +10,7 @@ class ProfileContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        'Perfil del usuario:\n\nNombre: ${user.nombre}\nTipo: ${user.tipoUsuario}',
+        'Perfil del usuario:\n\nNombre: ${user.nombre}\nApellido: ${user.apellido}',
         style: const TextStyle(fontSize: 18),
         textAlign: TextAlign.center,
       ),

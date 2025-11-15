@@ -19,7 +19,7 @@ class Sidebar extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text('Nombre: ${user.nombre}'),
-            accountEmail: Text('Rol: ${user.tipoUsuario}'),
+            accountEmail: Text('Apellido: ${user.apellido}'),
             currentAccountPicture: const CircleAvatar(
               backgroundColor: Colors.white,
               child: Icon(Icons.person, size: 40, color: Colors.blue),
@@ -50,6 +50,15 @@ class Sidebar extends StatelessWidget {
             selected: selectedIndex == 2,
             onTap: () {
               viewModel.changeTab(2);
+              context.pop();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.favorite),
+            title: const Text('Favoritos'),
+            selected: selectedIndex == 3,
+            onTap: () {
+              viewModel.changeTab(3);
               context.pop();
             },
           ),
