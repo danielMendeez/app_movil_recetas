@@ -39,27 +39,70 @@ class _HomeContentState extends State<HomeContent> {
           itemCount: vm.recetas.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 0.8,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
+            childAspectRatio: 0.75,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
           ),
           itemBuilder: (_, i) {
             final r = vm.recetas[i];
+
             return Card(
-              child: Column(
-                children: [
-                  Image.network(r.imagenUrl, height: 120, fit: BoxFit.cover),
-                  Text(r.titulo, maxLines: 2, overflow: TextOverflow.ellipsis),
-                  IconButton(
-                    icon: const Icon(Icons.favorite_border),
-                    onPressed: () {
-                      vm.like(r);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Agregado a favoritos')),
-                      );
-                    },
-                  ),
-                ],
+              color: Colors.orange.shade50,
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.fastfood,
+                      size: 48,
+                      color: Colors.orange.shade400,
+                    ),
+                    SizedBox(height: 10),
+                    // Título
+                    Text(
+                      r.titulo,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '\$${r.precioPorPorcion.toStringAsFixed(2)} / porción',
+                          style: TextStyle(
+                            color: Colors.orange.shade700,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.favorite,
+                            color: Colors.orange,
+                          ),
+                          onPressed: () {
+                            vm.like(r);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Agregado a favoritos'),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           },

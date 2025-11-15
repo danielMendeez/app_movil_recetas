@@ -24,35 +24,58 @@ class _DashboardViewState extends State<DashboardView> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => DashboardViewModel(),
-      child: Builder(
-        builder: (context) {
-          return Consumer<DashboardViewModel>(
-            builder: (context, viewModel, child) {
-              return Scaffold(
-                key: _scaffoldKey,
-                appBar: AppBar(
-                  title: Text('Bienvenido, ${widget.user.nombre}!'),
-                  centerTitle: true,
-                  leading: IconButton(
-                    icon: const Icon(Icons.menu),
-                    onPressed: () {
-                      _scaffoldKey.currentState?.openDrawer();
-                    },
-                  ),
-                ),
-                drawer: Sidebar(user: widget.user),
-                body: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: _getContent(viewModel.selectedIndex),
-                ),
-              );
-            },
+      child: Consumer<DashboardViewModel>(
+        builder: (context, viewModel, child) {
+          return Scaffold(
+            key: _scaffoldKey,
+            backgroundColor: Colors.grey.shade50,
+            appBar: _buildAppBar(context),
+            drawer: Sidebar(user: widget.user),
+            body: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 350),
+              switchInCurve: Curves.easeOutQuart,
+              switchOutCurve: Curves.easeInQuart,
+              child: _getContent(viewModel.selectedIndex),
+            ),
           );
         },
       ),
     );
   }
 
+  // APP BAR MODERNO
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0.6,
+      shadowColor: Colors.black12,
+      surfaceTintColor: Colors.transparent,
+      centerTitle: true,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Bienvenido, ${widget.user.nombre ?? ''}!',
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          Text(
+            'RecetasApp',
+            style: TextStyle(fontSize: 12, color: Colors.orange.shade700),
+          ),
+        ],
+      ),
+      leading: IconButton(
+        icon: const Icon(Icons.menu_rounded, color: Colors.black87),
+        onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+      ),
+    );
+  }
+
+  // CONTENIDOS
   Widget _getContent(int index) {
     switch (index) {
       case 0:

@@ -1,6 +1,7 @@
 class Recipe {
   final int id;
   final String titulo;
+  final String titulo_receta;
   final String imagenUrl;
   final int tiempoPreparacion;
   final int porciones;
@@ -19,6 +20,7 @@ class Recipe {
   Recipe({
     required this.id,
     required this.titulo,
+    required this.titulo_receta,
     required this.imagenUrl,
     required this.tiempoPreparacion,
     required this.porciones,
@@ -39,6 +41,7 @@ class Recipe {
     return Recipe(
       id: json['id'] ?? 0,
       titulo: json['title'] ?? '',
+      titulo_receta: json['titulo_receta'] ?? '',
       imagenUrl: json['image'] ?? '',
       tiempoPreparacion: json['readyInMinutes'] ?? 0,
       porciones: json['servings'] ?? 1,
@@ -99,6 +102,7 @@ class Recipe {
     return {
       'id': id,
       'titulo': titulo,
+      'titulo_receta': titulo_receta,
       'imagenUrl': imagenUrl,
       'tiempoPreparacion': tiempoPreparacion,
       'porciones': porciones,
@@ -137,6 +141,7 @@ class Recipe {
     return Recipe(
       id: id ?? this.id,
       titulo: titulo ?? this.titulo,
+      titulo_receta: titulo_receta ?? this.titulo_receta,
       imagenUrl: imagenUrl ?? this.imagenUrl,
       tiempoPreparacion: tiempoPreparacion ?? this.tiempoPreparacion,
       porciones: porciones ?? this.porciones,
