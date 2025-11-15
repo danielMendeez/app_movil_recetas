@@ -45,20 +45,11 @@ class Sidebar extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Configuraciones'),
+            leading: const Icon(Icons.favorite),
+            title: const Text('Favoritos'),
             selected: selectedIndex == 2,
             onTap: () {
               viewModel.changeTab(2);
-              context.pop();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.favorite),
-            title: const Text('Favoritos'),
-            selected: selectedIndex == 3,
-            onTap: () {
-              viewModel.changeTab(3);
               context.pop();
             },
           ),

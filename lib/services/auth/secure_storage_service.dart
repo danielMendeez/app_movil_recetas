@@ -19,6 +19,11 @@ class SecureStorageService {
     await _storage.write(key: _keyUser, value: jsonString);
   }
 
+  // Obtener token
+  static Future<String?> getToken() async {
+    return await _storage.read(key: _keyToken);
+  }
+
   // Obtener usuario
   static Future<User?> getUser() async {
     final jsonString = await _storage.read(key: _keyUser);
@@ -33,15 +38,16 @@ class SecureStorageService {
     }
   }
 
-  // Obtener token
-  static Future<String?> getToken() async {
-    return await _storage.read(key: _keyToken);
-  }
-
   // Verificar si hay token
   static Future<bool> hasToken() async {
     final token = await _storage.read(key: _keyToken);
     return token != null && token.isNotEmpty;
+  }
+
+  // Verificar si hay datos de usuario
+  static Future<bool> hasDataUser() async {
+    final user = await _storage.read(key: _keyUser);
+    return user != null;
   }
 
   // Eliminar token (logout)

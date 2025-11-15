@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../viewmodels/dashboard_viewmodel.dart';
+import '../../viewmodels/auth/auth_viewmodel.dart';
 import 'components/sidebar.dart';
 import 'components/home_content.dart';
 import 'components/profile_content.dart';

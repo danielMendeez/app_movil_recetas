@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'app_router.dart';
 import 'package:provider/provider.dart';
-import 'package:app_movil_recetas/views/splash_view.dart';
 import 'viewmodels/auth/login_viewmodel.dart';
+import 'viewmodels/auth/auth_viewmodel.dart';
 import 'viewmodels/auth/register_viewmodel.dart';
 import 'viewmodels/dashboard_viewmodel.dart';
 import 'viewmodels/recipes_viewmodel.dart';
@@ -26,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LoginViewModel()),
+        ChangeNotifierProvider(create: (_) => AuthViewModel()..initialize()),
         ChangeNotifierProvider(create: (_) => DashboardViewModel()),
         ChangeNotifierProvider(create: (_) => RegisterViewModel()),
         ChangeNotifierProvider(create: (_) => RecipesViewModel()),

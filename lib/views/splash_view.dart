@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../services/auth/secure_storage_service.dart';
+import 'package:provider/provider.dart';
+import '../viewmodels/auth/auth_viewmodel.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -17,22 +19,20 @@ class _SplashViewState extends State<SplashView> {
   }
 
   Future<void> _checkAuthStatus() async {
+    // Esperar un poco para que la animación del splash se vea
     await Future.delayed(const Duration(milliseconds: 600));
 
-    final hasToken = await SecureStorageService.hasToken();
+    final authViewModel = context.read<AuthViewModel>();
 
-    if (!hasToken) {
-      if (mounted) context.go('/login');
-      return;
-    } else {
-      _navigateBasedOnAuth(true);
+    // Esperar a que el AuthViewModel se inicialice
+    while (!authViewModel.isInitialized) {
+      await Future.delayed(const Duration(milliseconds: 100));
     }
-  }
 
-  void _navigateBasedOnAuth(bool isAuthenticated) {
-    final user = SecureStorageService.getUser();
-    if (isAuthenticated) {
-      context.go('/dashboard', extra: user);
+    if (!mounted) return;
+
+    if (authViewModel.isLoggedIn) {
+      context.go('/dashboard');
     } else {
       context.go('/login');
     }
