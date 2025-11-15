@@ -55,34 +55,42 @@ class _HomeContentState extends State<HomeContent> {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.fastfood,
                       size: 48,
                       color: Colors.orange.shade400,
                     ),
-                    SizedBox(height: 10),
-                    // Título
-                    Text(
-                      r.titulo,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                    const SizedBox(height: 12),
+
+                    /// El título de la receta
+                    Expanded(
+                      child: Text(
+                        r.titulo,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
-                    const Spacer(),
+
+                    const SizedBox(height: 8),
+
+                    /// Barra inferior con precio + favorito
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          '\$${r.precioPorPorcion.toStringAsFixed(2)} / porción',
-                          style: TextStyle(
-                            color: Colors.orange.shade700,
-                            fontWeight: FontWeight.bold,
+                        Flexible(
+                          child: Text(
+                            '\$${r.precioPorPorcion.toStringAsFixed(2)} / porción',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.orange.shade700,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         IconButton(

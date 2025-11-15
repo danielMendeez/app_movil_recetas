@@ -43,7 +43,7 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  // APP BAR MODERNO
+  // APPBAR
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,

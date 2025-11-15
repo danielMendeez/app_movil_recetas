@@ -54,7 +54,7 @@ class _FavoritesContentState extends State<FavoritesContent> {
                 padding: const EdgeInsets.all(14),
                 child: Row(
                   children: [
-                    // Placeholder icon (image removed due to CORS)
+                    // Placeholder icon for recipe image
                     CircleAvatar(
                       radius: 28,
                       backgroundColor: Colors.orange.shade100,
@@ -70,49 +70,20 @@ class _FavoritesContentState extends State<FavoritesContent> {
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            r.titulo_receta,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                          Flexible(
+                            child: Text(
+                              r.titulo_receta,
+                              maxLines: 3, // ← ahora más visible
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 6),
-
-                          Wrap(
-                            spacing: 6,
-                            children: [
-                              if (r.vegana)
-                                Chip(
-                                  label: const Text('Vegano'),
-                                  backgroundColor: Colors.orange.shade50,
-                                  side: BorderSide(
-                                    color: Colors.orange.shade200,
-                                  ),
-                                ),
-                              if (r.vegetariana)
-                                Chip(
-                                  label: const Text('Vegetariano'),
-                                  backgroundColor: Colors.orange.shade50,
-                                  side: BorderSide(
-                                    color: Colors.orange.shade200,
-                                  ),
-                                ),
-                              if (r.sinGluten)
-                                Chip(
-                                  label: const Text('Sin Gluten'),
-                                  backgroundColor: Colors.orange.shade50,
-                                  side: BorderSide(
-                                    color: Colors.orange.shade200,
-                                  ),
-                                ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 4),
                           Text(
                             '⏱️ ${r.tiempoPreparacion} min · 🍽️ ${r.porciones} porciones',
                             style: TextStyle(color: Colors.grey.shade600),
